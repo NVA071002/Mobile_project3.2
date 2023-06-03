@@ -1,4 +1,4 @@
-package com.asmaamir.mlkitdemo.CameraX;
+package com.example.finalproject3.CameraX;
 
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
@@ -28,7 +28,7 @@ import androidx.camera.core.PreviewConfig;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.asmaamir.mlkitdemo.R;
+import com.example.finalproject3.R;
 
 import java.io.File;
 
@@ -76,7 +76,6 @@ public class CameraxActivity extends AppCompatActivity {
             }
         });
     }
-
     private void initCamera() {
         CameraX.unbindAll();
         PreviewConfig pc = new PreviewConfig
@@ -84,7 +83,6 @@ public class CameraxActivity extends AppCompatActivity {
                 .setLensFacing(lens)
                 .setTargetResolution(new Size(tv.getWidth(), tv.getHeight()))
                 .build();
-
         Preview preview = new Preview(pc);
         preview.setOnPreviewOutputUpdateListener(output -> {
             ViewGroup vg = (ViewGroup) tv.getParent();
@@ -109,7 +107,6 @@ public class CameraxActivity extends AppCompatActivity {
                     runOnUiThread(() -> Toast.makeText(getBaseContext(), msg, Toast.LENGTH_SHORT).show());
                     Log.i(TAG, msg);
                 }
-
                 @Override
                 public void onError(@NonNull ImageCapture.ImageCaptureError imageCaptureError, @NonNull String message, @Nullable Throwable cause) {
                     Log.e(TAG, "An error occurred while saving:" + message);

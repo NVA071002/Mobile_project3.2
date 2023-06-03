@@ -1,4 +1,4 @@
-package com.asmaamir.mlkitdemo.CameraX;
+package com.example.finalproject3.CameraX;
 
 import android.util.Log;
 

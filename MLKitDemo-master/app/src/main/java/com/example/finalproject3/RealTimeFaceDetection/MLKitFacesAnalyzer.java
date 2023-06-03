@@ -1,4 +1,4 @@
-package com.asmaamir.mlkitdemo.RealTimeFaceDetection;
+package com.example.finalproject3.RealTimeFaceDetection;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -55,7 +55,6 @@ public class MLKitFacesAnalyzer implements ImageAnalysis.Analyzer {
         int rotation = degreesToFirebaseRotation(rotationDegrees);
         fbImage = FirebaseVisionImage.fromMediaImage(image.getImage(), rotation);
         initDrawingUtils();
-
         initDetector();
         detectFaces();
     }
@@ -87,7 +86,6 @@ public class MLKitFacesAnalyzer implements ImageAnalysis.Analyzer {
                 .getInstance()
                 .getVisionFaceDetector(detectorOptions);
     }
-
     private void detectFaces() {
         faceDetector
                 .detectInImage(fbImage)
@@ -99,7 +97,6 @@ public class MLKitFacesAnalyzer implements ImageAnalysis.Analyzer {
                     }
                 }).addOnFailureListener(e -> Log.i(TAG, e.toString()));
     }
-
     private void processFaces(List<FirebaseVisionFace> faces) {
         for (FirebaseVisionFace face : faces) {
             float smileProbability = face.getSmilingProbability();
@@ -115,15 +112,12 @@ public class MLKitFacesAnalyzer implements ImageAnalysis.Analyzer {
             } else if (smileProbability <= 0.2 && smileProbability >= 0.0) {
                 smileRatingValue = BaseRating.TERRIBLE;
             }
-
             Log.e("SMILE", String.valueOf(smileRatingValue));
             // Update the SmileRating view
             int finalSmileRatingValue = smileRatingValue;
             ((RealTimeFaceDetectionActivity) tv.getContext()).runOnUiThread(() -> {
                     smileRating.setSelectedSmile(finalSmileRatingValue, true);
-
             });
-
             drawContours(face.getContour(FirebaseVisionFaceContour.FACE).getPoints());
             drawContours(face.getContour(FirebaseVisionFaceContour.LEFT_EYEBROW_BOTTOM).getPoints());
             drawContours(face.getContour(FirebaseVisionFaceContour.RIGHT_EYEBROW_BOTTOM).getPoints());
@@ -140,7 +134,6 @@ public class MLKitFacesAnalyzer implements ImageAnalysis.Analyzer {
         }
         iv.setImageBitmap(bitmap);
     }
-
     private void drawContours(List<FirebaseVisionPoint> points) {
         int counter = 0;
         for (FirebaseVisionPoint point : points) {
@@ -161,7 +154,6 @@ public class MLKitFacesAnalyzer implements ImageAnalysis.Analyzer {
             canvas.drawCircle(translateX(point.getX()), translateY(point.getY()), 6, dotPaint);
         }
     }
-
     private float translateY(float y) {
         return y * heightScaleFactor;
     }

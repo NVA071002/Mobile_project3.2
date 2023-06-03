@@ -1,4 +1,4 @@
-package com.asmaamir.mlkitdemo.FaceTracking;
+package com.example.finalproject3.RealTimeFaceDetection;
 
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
@@ -22,23 +22,28 @@ import androidx.camera.core.PreviewConfig;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.asmaamir.mlkitdemo.R;
+import com.example.finalproject3.R;
+import com.hsalf.smilerating.SmileRating;
 
-public class FaceTrackingActivity extends AppCompatActivity {
+public class RealTimeFaceDetectionActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_PERMISSION = 101;
     public static final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"};
     private TextureView tv;
     private ImageView iv;
-    private static final String TAG = "FaceTrackingActivity";
+    private static final String TAG = "RealTimeFaceDetectionActivity";
 
     public static CameraX.LensFacing lens = CameraX.LensFacing.FRONT;
+    private SmileRating smileRating = null;
+    static int smile;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_face_tracking);
-        tv = findViewById(R.id.tracking_texture_view);
-        iv = findViewById(R.id.tracking_image_view);
+        setContentView(R.layout.activity_real_time_face_detection);
+        tv = findViewById(R.id.face_texture_view);
+        iv = findViewById(R.id.face_image_view);
+        smileRating = findViewById(R.id.smile_rating);
         if (allPermissionsGranted()) {
             tv.post(this::startCamera);
         } else {
@@ -87,12 +92,11 @@ public class FaceTrackingActivity extends AppCompatActivity {
                 .setTargetResolution(new Size(tv.getWidth(), tv.getHeight()))
                 .setLensFacing(lens)
                 .build();
-
         ImageAnalysis imageAnalysis = new ImageAnalysis(iac);
-        imageAnalysis.setAnalyzer(Runnable::run,
-                new FaceTrackingAnalyzer(tv, iv, lens));
+        imageAnalysis.setAnalyzer(Runnable::run, new MLKitFacesAnalyzer(tv, iv, lens, smileRating));
         CameraX.bindToLifecycle(this, preview, imageAnalysis);
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -117,4 +121,12 @@ public class FaceTrackingActivity extends AppCompatActivity {
         }
         return true;
     }
+    private void updateSmileRating(int smile) {
+        runOnUiThread(() -> {
+            if (smile >= 0 && smile <= 4) {
+                smileRating.setSelectedSmile(smile, true);
+            }
+        });
+    }
+
 }

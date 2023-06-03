@@ -1,4 +1,4 @@
-package com.asmaamir.mlkitdemo.RealTimeObjectDetection;
+package com.example.finalproject3.FaceTracking;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -17,16 +17,14 @@ import androidx.camera.core.ImageProxy;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata;
-import com.google.firebase.ml.vision.objects.FirebaseVisionObject;
-import com.google.firebase.ml.vision.objects.FirebaseVisionObjectDetector;
-import com.google.firebase.ml.vision.objects.FirebaseVisionObjectDetectorOptions;
+import com.google.firebase.ml.vision.face.FirebaseVisionFace;
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
 
-import java.util.Arrays;
 import java.util.List;
 
-public class MLKitObjectsAnalyzer implements ImageAnalysis.Analyzer {
-    private static final String TAG = "MLKitObjectsAnalyzer";
-    private FirebaseVisionObjectDetector objectDetector;
+public class FaceTrackingAnalyzer implements ImageAnalysis.Analyzer {
+    private static final String TAG = "MLKitFacesAnalyzer";
     private TextureView tv;
     private ImageView iv;
     private Bitmap bitmap;
@@ -37,12 +35,11 @@ public class MLKitObjectsAnalyzer implements ImageAnalysis.Analyzer {
     private FirebaseVisionImage fbImage;
     private CameraX.LensFacing lens;
 
-    MLKitObjectsAnalyzer(TextureView tv, ImageView iv, CameraX.LensFacing lens) {
+    FaceTrackingAnalyzer(TextureView tv, ImageView iv, CameraX.LensFacing lens) {
         this.tv = tv;
         this.iv = iv;
         this.lens = lens;
     }
-
 
     @Override
     public void analyze(ImageProxy image, int rotationDegrees) {
@@ -52,61 +49,59 @@ public class MLKitObjectsAnalyzer implements ImageAnalysis.Analyzer {
         int rotation = degreesToFirebaseRotation(rotationDegrees);
         fbImage = FirebaseVisionImage.fromMediaImage(image.getImage(), rotation);
         initDrawingUtils();
+
         initDetector();
-        detectObjects();
+    }
+
+    private void initDetector() {
+        FirebaseVisionFaceDetectorOptions detectorOptions = new FirebaseVisionFaceDetectorOptions
+                .Builder()
+                .enableTracking()
+                .build();
+        FirebaseVisionFaceDetector faceDetector = FirebaseVision.getInstance().getVisionFaceDetector(detectorOptions);
+        faceDetector.detectInImage(fbImage).addOnSuccessListener(firebaseVisionFaces -> {
+            if (!firebaseVisionFaces.isEmpty()) {
+                processFaces(firebaseVisionFaces);
+            } else {
+                canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.MULTIPLY);
+            }
+        }).addOnFailureListener(e -> Log.i(TAG, e.toString()));
     }
 
     private void initDrawingUtils() {
         bitmap = Bitmap.createBitmap(tv.getWidth(), tv.getHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         linePaint = new Paint();
-        linePaint.setColor(Color.CYAN);
+        linePaint.setColor(Color.GREEN);
         linePaint.setStyle(Paint.Style.STROKE);
-        linePaint.setStrokeWidth(3f);
+        linePaint.setStrokeWidth(2f);
         linePaint.setTextSize(40);
         widthScaleFactor = canvas.getWidth() / (fbImage.getBitmap().getWidth() * 1.0f);
         heightScaleFactor = canvas.getHeight() / (fbImage.getBitmap().getHeight() * 1.0f);
     }
 
-    private void initDetector() {
-        FirebaseVisionObjectDetectorOptions detectorOptions = new FirebaseVisionObjectDetectorOptions
-                .Builder()
-                .setDetectorMode(FirebaseVisionObjectDetectorOptions.STREAM_MODE)
-                .enableClassification()
-                .build();
-        objectDetector = FirebaseVision.getInstance().getOnDeviceObjectDetector(detectorOptions);
-    }
+    private void processFaces(List<FirebaseVisionFace> faces) {
+        for (FirebaseVisionFace face : faces) {
 
-    private void detectObjects() {
-        objectDetector.processImage(fbImage).addOnSuccessListener(firebaseVisionObjects -> {
-            if (!firebaseVisionObjects.isEmpty()) {
-                processObjects(firebaseVisionObjects);
-            } else {
-                canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.MULTIPLY);
-            }
-        }).addOnFailureListener(e -> {
+            Rect box = new Rect((int) translateX(face.getBoundingBox().left),
+                    (int) translateY(face.getBoundingBox().top),
+                    (int) translateX(face.getBoundingBox().right),
+                    (int) translateY(face.getBoundingBox().bottom));
+//            canvas.drawText(String.valueOf(face.getTrackingId()),
+//                    translateX(face.getBoundingBox().centerX()),
+//                    translateY(face.getBoundingBox().centerY()),
+//                    linePaint);
+            Log.i(TAG, "top: " + (int) translateY(face.getBoundingBox().top)
+                    + "left: " + (int) translateX(face.getBoundingBox().left)
+                    + "bottom: " + (int) translateY(face.getBoundingBox().bottom)
+                    + "right: " + (int) translateX(face.getBoundingBox().right));
 
-        });
-    }
+            Log.i(TAG, "top: " + face.getBoundingBox().top
+                    + " left: " + face.getBoundingBox().left
+                    + " bottom: " + face.getBoundingBox().bottom
+                    + " right: " + face.getBoundingBox().right);
 
-    private void processObjects(List<FirebaseVisionObject> firebaseVisionObjects) {
-        List<String> classes = Arrays.asList("CATEGORY_UNKNOWN", "CATEGORY_HOME_GOOD",
-                "CATEGORY_FASHION_GOOD", "CATEGORY_FOOD",
-                "CATEGORY_PLACE", "CATEGORY_PLANT");
-        Log.i(TAG, "Size: " + firebaseVisionObjects.size());
-        for (FirebaseVisionObject object : firebaseVisionObjects) {
-            Log.i(TAG, object.getClassificationCategory() + "");
-            Rect box = new Rect((int) translateX(object.getBoundingBox().left),
-                    (int) translateY(object.getBoundingBox().top),
-                    (int) translateX(object.getBoundingBox().right),
-                    (int) translateY(object.getBoundingBox().bottom));
             canvas.drawRect(box, linePaint);
-            canvas.drawText(String.format("%s %.2f",
-                    classes.get(object.getClassificationCategory()),
-                    object.getClassificationConfidence() == null ? 0 : object.getClassificationConfidence()),
-                    translateX(object.getBoundingBox().centerX()),
-                    translateY(object.getBoundingBox().centerY()),
-                    linePaint);
         }
         iv.setImageBitmap(bitmap);
     }

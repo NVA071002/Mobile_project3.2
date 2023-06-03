@@ -9,16 +9,16 @@ The app contains various examples of ML-Kit (Vision part), each example is prese
 ## 💫 Available Examples
 
 ### 📸 Camera
-- [📷 CameraX example](app/src/main/java/com/asmaamir/mlkitdemo/CameraX): Preview, Capture and Analyze functionalities 🤹‍♀️ 
+- [📷 CameraX example](app/src/main/java/com/example/finalproject3/CameraX): Preview, Capture and Analyze functionalities 🤹‍♀️ 
 
 ### 💼 ML Kit Models
-- [👩‍🚀 Real time face detection](app/src/main/java/com/asmaamir/mlkitdemo/RealTimeFaceDetection): Contour detecting 
-- [🎴 Face detection from a picked image](app/src/main/java/com/asmaamir/mlkitdemo/CaptureFaceDetection): Contour, landmarks and face classification
-- [🕵️‍♀️ Face detection and tracking](app/src/main/java/com/asmaamir/mlkitdemo/FaceTracking): Tracking faces over frames
-- [🌞 Real time object detection](app/src/main/java/com/asmaamir/mlkitdemo/RealTimeObjectDetection): Object detection and classification
+- [👩‍🚀 Real time face detection](app/src/main/java/com/example/finalproject3/RealTimeFaceDetection): Contour detecting 
+- [🎴 Face detection from a picked image](app/src/main/java/com/example/finalproject3/CaptureFaceDetection): Contour, landmarks and face classification
+- [🕵️‍♀️ Face detection and tracking](app/src/main/java/com/example/finalproject3/FaceTracking): Tracking faces over frames
+- [🌞 Real time object detection](app/src/main/java/com/example/finalproject3/RealTimeObjectDetection): Object detection and classification
 
 ### 🚀 Custom Models (Local 📍)
-- [🕵️‍♀️ Object Detection](app/src/main/java/com/asmaamir/mlkitdemo/CustomModelDetection)
+- [🕵️‍♀️ Object Detection](app/src/main/java/com/example/finalproject3/CustomModelDetection)
 > Still has drawing issue 🙄
 
 #### 🎁 Used Models

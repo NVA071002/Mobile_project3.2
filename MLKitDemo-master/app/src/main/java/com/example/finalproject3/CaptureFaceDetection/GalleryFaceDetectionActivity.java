@@ -1,4 +1,4 @@
-package com.asmaamir.mlkitdemo.CaptureFaceDetection;
+package com.example.finalproject3.CaptureFaceDetection;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.asmaamir.mlkitdemo.R;
+import com.example.finalproject3.R;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.common.FirebaseVisionPoint;
