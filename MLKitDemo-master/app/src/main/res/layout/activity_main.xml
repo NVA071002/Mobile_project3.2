@@ -9,42 +9,192 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="200dp"
+        android:id="@+id/banner_image"
+        android:orientation="vertical"
+        android:background="@color/icon">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="250dp"
+            android:layout_height="180dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="88dp"
+            android:layout_marginTop="48dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/channels4_profile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/appname"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:text="@string/app_name"
-            android:layout_centerInParent="true" />
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            android:typeface="monospace"
+            />
+
         <TextView
-            android:layout_below="@+id/appname"
-            android:id="@+id/group"
+            android:id="@+id/groupName"
+            android:layout_below="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Group 9"
-            android:layout_centerInParent="true" />
-        <TextView
-            android:layout_below="@+id/group"
-            android:id="@+id/member1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nguyen Viet Anh 20110352"
-            android:layout_centerInParent="true" />
-        <TextView
-            android:layout_below="@+id/member1"
-            android:id="@+id/member2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Le Y Thien 20110403"
-            android:layout_centerInParent="true" />
-        <TextView
-            android:layout_below="@+id/member2"
-            android:id="@+id/member3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ly Hong Khanh 20110373"
-            android:layout_centerInParent="true" />
+            android:layout_alignParentRight="true"
+            android:text="Group: 09"
+            android:layout_marginRight="30dp"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:typeface="monospace"
+             />
+
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/groupName"
+            android:id="@+id/vietAnhInfo"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/border"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="279dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/vietanhImg"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/user_avt" />
+
+            <TextView
+                android:id="@+id/vietanhName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="25dp"
+                android:layout_toEndOf="@id/vietanhImg"
+                android:text="@string/VietAnhName"
+                android:textColor="@color/setText"
+                android:textSize="20sp"
+                android:typeface="monospace" />
+
+            <TextView
+                android:id="@+id/vietanhID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/vietanhName"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/vietanhImg"
+                android:text="ID : 20110352"
+                android:textColor="@color/setText"
+                android:textSize="20sp"
+                android:typeface="monospace" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@+id/vietAnhInfo"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="274dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/border"
+            android:id="@+id/ThienInfo"
+            app:layout_constraintTop_toBottomOf="@id/vietAnhInfo"
+            android:layout_marginTop="20dp"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/ThienImg"
+                android:src="@drawable/user_avt"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ThienName"
+                android:layout_toEndOf="@id/ThienImg"
+                android:layout_marginTop="25dp"
+                android:text="@string/ThienName"
+                android:textSize="20sp"
+                android:textColor="@color/setText"
+                android:layout_marginStart="10dp"
+                android:typeface="monospace"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ThienID"
+                android:layout_below="@id/ThienName"
+                android:text="ID : 20110403"
+                android:layout_toEndOf="@id/ThienImg"
+                android:layout_marginStart="10dp"
+                android:textSize="20sp"
+                android:textColor="@color/setText"
+                android:typeface="monospace"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/KhanhInfo"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/border"
+            android:layout_below="@+id/ThienInfo"
+
+            tools:layout_editor_absoluteY="260dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/KhanhImg"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/user_avt" />
+
+            <TextView
+                android:id="@+id/KhanhName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="25dp"
+                android:layout_toEndOf="@id/KhanhImg"
+                android:text="@string/KhanhName"
+                android:textColor="@color/setText"
+                android:textSize="20sp"
+                android:typeface="monospace" />
+
+            <TextView
+                android:id="@+id/KhanhID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/KhanhName"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/KhanhImg"
+                android:text="ID : 20110373"
+                android:textColor="@color/setText"
+                android:textSize="20sp"
+                android:typeface="monospace" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

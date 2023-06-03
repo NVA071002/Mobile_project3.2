@@ -2,15 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/icon">
 
     <ImageView
-        android:layout_width="180dp"
-        android:layout_height="130dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_centerInParent="true"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
-        android:background="@drawable/mlkit" />
+        android:background="@drawable/channels4_profile" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -19,5 +19,6 @@
         android:padding="6dp"
         android:text="@string/app_name"
         android:textColor="#ffffff"
-        android:textSize="14sp" />
+        android:textSize="25sp"
+        />
 </RelativeLayout>

@@ -121,12 +121,5 @@ public class RealTimeFaceDetectionActivity extends AppCompatActivity {
         }
         return true;
     }
-    private void updateSmileRating(int smile) {
-        runOnUiThread(() -> {
-            if (smile >= 0 && smile <= 4) {
-                smileRating.setSelectedSmile(smile, true);
-            }
-        });
-    }
 
 }

@@ -14,4 +14,7 @@
     <string name="object_detection_local">Object Detection | Local</string>
     <string name="image_classification_local">Image Classification | Local</string>
     <string name="object_detection_local_video">Object Detection Video | Local</string>
+    <string name="VietAnhName">Name: Nguyễn Việt Anh</string>
+    <string name="KhanhName">Name: Lý Hồng Khanh</string>
+    <string name="ThienName">Name: Lê Y Thiện</string>
 </resources>
